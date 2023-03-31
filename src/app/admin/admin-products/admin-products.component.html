@@ -1,0 +1,74 @@
+<p>
+    <a routerLink="/admin/products/new" class="btn btn-primary">
+        New Products
+    </a>
+</p>
+
+<p>
+    <input #query
+    (keyup)="filter(query.value)"
+    type="text" class="form-control" placeholder="Search...">
+</p>
+
+<data-table
+    [items]="items"
+    [itemCount]="itemCount"
+    [autoReload]="true"
+    
+>
+<!--[reload] ="reloadItems($event)" this is data table property which is not working -->
+<data-table-column
+    [property]="'title'"
+    [header]="'Title'"
+    [sortable]="true"
+    [resizable]="true"
+>
+</data-table-column>
+
+<data-table-column
+    [property]="'price'"
+    [header]="'Price'"
+    [sortable]="true"
+    [resizable]="true"
+>
+
+    <ng-template #datatableCell let-item="item">
+        {{item.price | currency:'INR':true}}
+    </ng-template>
+</data-table-column>
+
+<data-table-column
+    [property]="'$key'"
+    [resizable]="true"
+>
+
+    <ng-template #datatableCell let-item="item">
+        <a [routerLink]="['/admin/products/',item.$key]"></a>
+
+    </ng-template>
+</data-table-column>
+
+</data-table>
+
+
+
+
+<!-- this is normal way to write the-->
+<!-- <table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let p of filteredProducts">
+            <td>{{p.title}}</td>
+            <td>{{p.price}}</td>
+            <td>
+                <a [routerLink]="['/admin/products/'+p.$key]"></a>
+            </td>
+        </tr>
+    </tbody>
+</table> -->
